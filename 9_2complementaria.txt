@@ -1,0 +1,74 @@
+Devuelve el nombre del departamento donde trabaja el empleado que tiene el nif 38382980M.
+
+
+SELECT d.nombre
+FROM departamento AS d
+JOIN empleado AS e ON e.codigo_departamento=d.codigo
+WHERE nif='38382980M';
+
+Devuelve el nombre del departamento donde trabaja el empleado JOSE RUIZ SANTANA.
+
+SELECT d.nombre
+FROM departamentos As d
+JOIN empleado AS e ON e.codigo_departamento=d.codigo
+WHERE e.nombre='JOSE' AND apellido1='RUIZ' AND apellido2=`SANTANA';
+
+Devuelve un listado con el nombre de los empleados y el nombre del departamento donde trabaja cada uno.
+
+SELECT e.nombre, d.nombre AS nombre_departamento
+FROM departamento AS d
+JOIN empleado AS e ON e.codigo_departamento=d.codigo
+
+Devuelve un listado con el nombre de los empleados y el nombre del departamento donde trabaja cada uno. Ordena el resultado, en primer lugar por el nombre del departamento (en orden alfabético) y en segundo lugar por los apellidos y el nombre de los empleados.
+
+SELECT e.nombre, e.apellido1, e.apellido2, d.nombre AS nombre_departamento
+From empleado as e
+join departamento AS d ON e.codigo_departamento=d.codigo
+order by d.nombre, e.apellido1, e.apellido2, e.nombre;
+
+Devuelve un listado con el código y el nombre del departamento, de aquellos departamentos que tienen empleados.
+
+SELECT DISTINCT d.codigo, d.nombre
+FROM departamento AS d
+JOIN empleado AS e ON d.codigo = e.codigo_departamento;
+
+Devuelve un listado con el código, el nombre del departamento y el valor del presupuesto actual del que dispone, solo de aquellos departamentos que tienen empleados. El valor del presupuesto actual se puede calcular restando al valor del presupuesto inicial (atributo presupuesto) el valor de los gastos que ha generado (atributo gastos).
+
+SELECT d.codigo, d.nombre, (d.presupuesto-d.gastos) AS presupuesto_actual
+FROM departamento AS d
+JOIN empleado AS e ON d.codigo = e.codigo_departamento
+GROUP BY d.codigo, d.nombre, d.presupuesto, d.gastos;
+
+Devuelve un listado con los datos de los empleados que trabajan en el departamento de I+D. Ordena el resultado alfabéticamente por apellidos y nombre.
+
+SELECT SELECT e.nombre, e.apellido1, e.apellido2
+FROM empleado AS e
+JOIN departamento AS d ON e.codigo_departamento = d.codigo
+WHERE d.nombre = 'I+D'
+ORDER BY e.apellido1, e.apellido2, e.nombre;
+
+Devuelve un listado con los datos de los empleados que trabajan en el departamento de Sistemas, Contabilidad o I+D. 
+
+SELECT e.nombre, e.apellido1, e.apellido2
+FROM empleado AS e
+JOIN departamento AS d ON e.codigo_departamento = d.codigo
+WHERE d.nombre IN ('Sistemas', 'Contabilidad', 'I+D')
+ORDER BY e.apellido1, e.apellido2, e.nombre;
+
+
+Devuelve una lista con el nombre de los empleados que tienen los departamentos que  tienen un presupuesto entre 100000 y 200000 euros.
+
+SELECT e.nombre, e.apellido1, e.apellido2
+FROM empleado AS e
+JOIN departamento AS d ON e.codigo_departamento = d.codigo
+WHERE d.presupuesto BETWEEN 100000 AND 200000;
+
+
+Devuelve un listado con el nombre de los departamentos donde existe algún empleado cuyo segundo apellido sea NULL. 
+
+SELECT DISTINCT d.nombre
+FROM departamento AS d
+JOIN empleado AS e ON d.codigo = e.codigo_departamento
+WHERE e.apellido2 IS NULL;
+
+

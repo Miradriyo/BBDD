@@ -1,0 +1,13 @@
+HOTEL( ID Hotel(PK), Nombre,Categoría, Ciudad, Dirección, Telf, Nombre Director)
+
+ESTANCIAS( Código(PK), tipo, ID Hotel (FK hotel) ) 
+
+SALÓN( Código(PK), aforo, equipamiento)
+
+HABITACIÓN( Código(PK), categoría, decoración, tamaño cama, conexión a internet, baño/ducha, dimensión, equipamiento especial)
+
+ESTANCIAS_CLIENTE( Código (KF), DNI(FK), fecha inicio, fecha fin) 
+
+CLIENTE (DNI(PK), Nombre, apellidos, dirección, telf,)
+
+FACTURA (Nº Factura, ID Hotel, Importe, gatsos telf, gastos restauración, DNI (FK))

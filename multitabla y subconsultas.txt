@@ -1,0 +1,44 @@
+//Mostrar para cada empleado, el nombre de departamento y el nombre de dicho empleado y su 
+
+
+SELECT e.emp_no, e.salario, d.dnombre
+FROM empleados AS e
+JOIN departamentos AS d  ON  e.dept_no = d.dept_no;
+
+//Mostrar el nombre de cada empleado y la localidad del departamento en el que trabaja.
+
+
+SELECT e.emp_no, e.apellido, d.ciudad
+FROM empleados AS e
+JOIN departamentos AS d  ON  e.dept_no = d.dept_no;
+
+//Mostrar el nombre del departamento y la media de las comisiones de sus empleados.
+
+SELECT dnombre FROM departamentos;
+
+SELECT AVG (comision)
+FROM empleados
+
+SELECT d.dnombre, AVG(e.comision)
+FROM departamentos AS d
+JOIN empleados AS e ON e.dept_no = d.dept_no
+GROUP BY d.dnombre;
+
+
+//Mostrar los nombres de los departamentos y el número de empleados de los departamentos que tienen más de dos empleados.
+
+SELECT d.dnombre, COUNT(e.emp_no) AS 'numero empleados'
+FROM DEPARTAMENTOS AS d
+JOIN empleados AS e ON e.dept_no = d.dept_no
+GROUP BY d.dnombre
+HAVING COUNT(e.emp_no) > 2; 
+
+
+//Mostrar cuantos empleados hay en cada ciudad de los departamentos
+
+SELECT d.ciudad, d.dept_no, COUNT(e.emp_no) AS 'numero empleados'
+FROM departamentos AS d
+JOIN empleados AS e ON e.dept_no = d.dept_no
+GROUP BY d.ciudad;
+
+
