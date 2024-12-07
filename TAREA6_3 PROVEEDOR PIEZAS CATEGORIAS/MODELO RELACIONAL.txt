@@ -1,0 +1,55 @@
+MODEL RELACIONAL
+
+PROVEEDORES ( CÓDIGO_PROVEEDORES (PK), NOMBRE, DIRECCION, CIUDAD)
+PIEZAS ( CÓDIGO_ PIEZAS(PK), NOMBRE, PRECIO, COLOR, CÓDIGO_CATEGORIAS (FK))
+PROVEEDORES_PIEZAS (CODIGO_PROVEEDORES (FK), CODIGO_PIEZAS (FK), CANTIDAD, FECHA)
+CATEGORIAS (CÓDIGO_CATEGORIAS (PK), NOMBRE)
+
+Mysql -u root
+
+CREATE DATABASE empresa;
+
+USE empresa;
+
+CREATE TABLE proveedores(
+	nombre VARCHAR (50) NOT NULL,
+	direccion VARCHAR(50),
+	ciudad VARCHAR (30)	
+);
+
+CREATE TABLE piezas(
+	nombre VARCHAR (50) NOT NULL,
+	precio DECIMAL (6,2),
+	color VARCHAR (15)
+);
+
+CREATE TABLE categorias(
+	nombre VARCHAR (50) NOT NULL
+);
+
+
+ALTER TABLE proveedores
+	ADD codigo_proveedores INT AUTO_INCREMENT PRIMARY KEY FIRST;
+
+
+ALTER TABLE piezas
+	ADD codigo_piezas INT AUTO_INCREMENT PRIMARY KEY FIRST;
+
+ALTER TABLE categorias
+	ADD codigo_categorias INT AUTO_INCREMENT PRIMARY KEY FIRST;
+
+
+CREATE TABLE proveedores_piezas(
+	codigo_proveedores INT NOT NULL,
+	codigo_piezas INT NOT NULL,
+	cantidad INT,
+	fecha DATE
+);
+
+ALTER TABLE proveedores_piezas
+	ADD CONSTRAINT codigo_proveedores FOREIGN KEY (codigo_proveedores) REFERENCES proveedores (codigo_proveedores);
+
+ALTER TABLE proveedores_piezas
+	ADD CONSTRAINT codigo_piezas FOREIGN KEY (codigo_piezas) REFERENCES piezas (codigo_piezas);
+	
+
