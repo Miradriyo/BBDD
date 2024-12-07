@@ -1,0 +1,37 @@
+mysql -u root
+USE pedidos;
+
+//Subir el precio en 0.2 Euros a todos los artículos cuyo precio sea inferior a 1 Euro.
+
+UPDATE Articulo
+  SET PVPArt=PVPArt+0.2
+    WHERE PVPArt<1;
+
+//Cambiar la fecha del pedido P0001 a 29/02/2024.
+
+UPDATE pedido
+SET FecPed='2024-02-29' WHERE RefPed='P0001';
+
+//Borrar los artículos que tengan un precio superior a 1 Euro.
+
+ALTER TABLE lineaPedido
+    ADD FOREIGN KEY (CodArt) REFERENCES Articulo(CodArt)
+    ON DELETE CASCADE;
+
+SELECT * FROM Articulo WHERE PVPArt > 1;
+
+DELETE FROM lineaPedido WHERE CodArt='A0078';
+
+DELETE FROM Articulo WHERE PVPArt>1;
+
+//Modificar el tipo de dato de cantart para que tenga dos decimales.
+
+ALTER TABLE lineaPedido MODIFY CantArt DECIMAL(5,2);
+
+//Aumentar la cantidad de los productos que forman parte del pedido P0004 en 5 uds cada uno.
+
+UPDATE lineaPedido SET CantArt= CantArt+5 WHERE RefPed='P0004';
+
+// Impedir que el pvpart sea inferior a 0.
+
+ALTER TABLE Articulo ADD CONSTRAINT CHECK (PVPArt>=0);

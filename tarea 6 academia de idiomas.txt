@@ -1,0 +1,39 @@
+mysql -u root
+
+CREATE DATABASE idiomas;
+
+USE idiomas;
+
+CREATE TABLE alumnos (
+	id_alumnos INT AUTO_INCREMENT PRIMARY KEY,
+	nombre CHAR(10),
+	apellidos VARCHAR(50),
+	fechanac DATE,
+	sexo ENUM('H','M')
+	
+);
+
+CREATE TABLE profesor (
+	id_profesor INT AUTO_INCREMENT PRIMARY KEY,
+	nombre CHAR(10),
+	apellidos VARCHAR(50),
+	DNI CHAR(9),
+	direccion VARCHAR(50),
+	titulacion ENUM ('LDO','DDO','CFGS'),
+	precio_hora DECIMAL(5,2) CHECK (precio_hora > 0)
+);
+
+CREATE TABLE curso (
+	codigo INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	nombre CHAR(10),
+	num_alumnos INT CHECK (num_alumnos >10),
+	id_profesor INT
+	fecha_inicio DATE,
+	fecha_final DATE CHECK(fecha_inicio<fecha_final),
+	horas INT CHECK(horas>=80),
+	FOREIGN KEY (id_profesor) REFERENCES profesor(id_profesor)
+);
+
+
+
+

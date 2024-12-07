@@ -1,0 +1,86 @@
+mysql -u root
+
+CREATE DATABASE pruebas;
+
+USE pruebas;
+
+// creamos la tabla
+
+CREATE TABLE agenda(
+	apellidos VARCHAR (30),
+	nombre VARCHAR (20),
+	domicilio VARCHAR(30),
+	telefono INT (9),
+	prefijo TINYINT(5) CHECK (prefijo='0034')
+);
+
+//insertamos los valores
+
+INSERT INTO agenda
+(apellidos, nombre, domicilio, telefono, prefijo)
+VALUES ('ALVAREZ','ALBERTO','COLON 123','423456798', '0034');
+
+
+INSERT INTO agenda
+(apellidos, nombre, domicilio, telefono, prefijo)
+VALUES ('JUAREZ','JUAN','AVELLANEDA 135','445878778','0034');
+
+//modificamos el prefijo 
+
+ALTER TABLE agenda
+MODIFY prefijo TINYINT(5) DEFAULT +0034;
+
+//seguimos insertando datos 
+
+INSERT INTO agenda
+(apellidos, nombre, domicilio, telefono, prefijo)
+VALUES ('LOPEZ','MARIA','URQUIZA 333','454545445','0047');
+
+INSERT INTO agenda
+(apellidos, nombre, domicilio, telefono, prefijo)
+VALUES('LOPEZ','JOSE','URQUIZA 333', '423456798','0034');
+
+INSERT INTO agenda
+(apellidos, nombre, domicilio, telefono, prefijo)
+VALUES('SALAS','SUSANA','GRAL. PAZ 1234',412345612,'+0036');
+
+//Actualizar el registro cuyo nombre sea "JUAN" por "JOSE"
+
+UPDATE agenda
+SET nombre='Jose'
+WHERE nombre='Juan';
+
+//Eliminar los registros cuyo número telefónico sea igual a 423456798.
+
+DELETE from agenda WHERE telefono = '423456798';
+
+//Eliminar todos los registros.
+
+DELETE FROM agenda;
+
+// Añade un nuevo registro con tus datos personales.Nos devolverá Query OK, 1 row affected, 1 warning (0.020 sec) por la Ñ de la dirección
+
+INSERT INTO agenda
+VALUES('Calvo Oro','Mireia','Judoca Francisco Fariña', '663690567','0034');
+
+//Añade de nuevo los registros borrados
+
+INSERT INTO agenda
+(apellidos, nombre, domicilio, telefono, prefijo)
+VALUES ('ALVAREZ','ALBERTO','COLON 123','423456798', '0034'),
+	('JUAREZ','JUAN','AVELLANEDA 135','445878778','0034'),
+	('LOPEZ','MARIA','URQUIZA 333','454545445','0047'),
+	('LOPEZ','JOSE','URQUIZA 333', '423456798','0034'),
+	('SALAS','SUSANA','GRAL. PAZ 1234',412345612,'+0036');
+
+//Actualiza el apellido LOPEZ con GARCIA.
+
+UPDATE agenda SET apellidos='GARCIA' WHERE apellidos='LOPEZ';
+
+//Cambia el nombre de JOSE por ROBERTO.
+
+UPDATE agenda SET nombre='ROBERTO' WHERE nombre='JOSE';
+
+//Actualiza el teléfono 423456798 por 123456789 de Alberto.
+
+UPDATE agenda SET telefono='123456789' WHERE nombre='ALBERTO';

@@ -1,0 +1,50 @@
+mysql -u root
+
+CREATE DATABASE IF NOT EXISTS matriculas;
+
+USE matriculas;
+
+CREATE TABLE IF NOT EXISTS alumnos (
+
+	numatricula INTEGER(5),
+	nombre VARCHAR(60),
+	fechanacimiento DATE,
+	telefono CHAR(12),
+	PRIMARY KEY (numatricula)
+);
+
+CREATE TABLE IF NOT EXISTS recibe (
+
+	numatricula INTEGER(5),
+	codasignatura INTEGER(5),
+	cursoescolar CHAR(10),
+	PRIMARY KEY (numatricula, codasignatura, cursoescolar)
+	
+);
+
+CREATE TABLE IF NOT EXISTS asignaturas (
+
+	codasignatura INTEGER(5),
+	nombre VARCHAR(30),
+	idprofesor INT(5),
+	PRIMARY KEY (codasignatura)	
+);
+	
+CREATE TABLE IF NOT EXISTS profesores (
+
+	idprofesor INTEGER(5),
+	nif_p CHAR(10) UNIQUE,
+	nombre VARCHAR(60),
+	especialidad VARCHAR(40),
+	telefono CHAR(12),
+	PRIMARY KEY (idprofesor)	
+);
+
+ALTER TABLE recibe
+	ADD  CONSTRAINT FKCODASIGNATURA FOREIGN KEY (numatricula)
+	REFERENCES alumnos(numatricula);
+
+ALTER TABLE asignaturas
+	ADD  CONSTRAINT FKPROFESOR
+	FOREIGN KEY (idprofesor)
+	REFERENCES profesores(idprofesor);

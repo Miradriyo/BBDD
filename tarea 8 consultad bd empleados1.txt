@@ -1,0 +1,69 @@
+mysql -u rootuse empleados
+use empleados1;
+
+//Calcula el salario medio de los empleados del departamento 20 de la tabla EMPLEADOS.
+
+SELECT Avg(salario) AS salario_medio FROM empleados WHERE dept_no=20;
+
+//Cuenta cuántos registros la tabla EMPLEADOS.
+
+SELECT Count(*) AS num_registros FROM empleados;
+
+//Cuenta cuántos registros de la tabla EMPLEADOS cobran comisión.
+
+SELECT COUNT(*) AS total_comision FROM empleados WHERE comision>0;
+
+//Calcula el salario máximo de la tabla EMPLEADOS.
+
+SELECT MAX(salario) FROM empleados WHERE salario;
+
+//Obtén el máximo nombre (alfabéticamente) de la tabla EMPLEADOS.
+
+SELECT apellido FROM empleados ORDER BY apellido DESC LIMIT 1;
+
+//Obtén el nombre del empleado que tiene mayor salario.
+
+SELECT apellido FROM empleados ORDER BY salario DESC LIMIT 1;
+
+//Obtén el mínimo salario de la tabla EMPLEADOS.
+
+SELECT MIN(salario) FROM empleados WHERE salario;
+
+//Obtén el nombre del empleado que tiene el mínimo salario.
+
+SELECT apellido FROM empleados WHERE salario = (SELECT min(salario) FROM empleados);
+
+//Calcula la suma de todos los salarios de la tabla EMPLEADOS.
+
+SELECT Sum(Salario) AS Total FROM empleados;
+
+//Obtén la desviación típica de todos los salarios de la tabla EMPLEADOS. Averigua antes que es la desviación típica.
+
+SELECT SQRT(SUM(POWER(SALARIO-(SELECT AVG (salario)FROM 	empleados),2))/ (COUNT(*)-1)) AS deviacion_tipica FROM 	empleados;
+
+	//explicacion paso a paso de la desviacion tipica:
+	
+	//media de los salarios
+	SELECT AVG (salario) AS media FROM empleados;
+	//diferencia entre cada salario y la media
+	SELECT SALARIO-(SELECT AVG (salario) AS media FROM 	empleados) AS diferencia FROM empleados;
+	//elevar al cuadrado cada diferencia
+	SELECT POWER(SALARIO-(SELECT AVG (salario)FROM 	empleados),2) AS cuadrado FROM empleados;
+	//Calcular la suma de las diferecias al cuadrado
+	SELECT SUM(POWER(SALARIO-(SELECT AVG (salario)FROM 	empleados),2)) AS suma_diferencias FROM empleados;
+	//Dividimos la suma de las diferencias al cuadrado por el 	número total de registros (empleados) menos 1
+	SELECT SUM(POWER(SALARIO-(SELECT AVG (salario)FROM 	empleados),2))/ (COUNT(*)-1) as total FROM empleados;
+	//tomamos la raíz cuadrada del total anterior para obtener 	la desviación estándar.
+	SELECT SQRT(SUM(POWER(SALARIO-(SELECT AVG (salario)FROM 	empleados),2))/ (COUNT(*)-1)) AS deviacion_tipica FROM 	empleados;
+	
+//Calcula el número de departamentos que hay en la tabla EMPLEADOS. Después,  calcula el número de personas que hay en cada departamento que hay en la tabla EMPLEADOS.
+
+SELECT DISTINCT dept_no AS numero_departamentos FROM empleados;
+
+//A partir de la tabla EMPLEADOS, visualiza cuántos apellidos empiezan por la letra ‘A’.
+
+SELECT * FROM empleados WHERE apellido LIKE 'A%';
+
+//Obtén el nombre de los empleados que empiecen por la letra ‘A’ y que tengan máximo salario (de los que empiezan por la letra ‘A’).
+
+SELECT * FROM EMPLEADOS WHERE apellido LIKE 'A%' AND salario = (SELECT MAX(salario) FROM EMPLEADOS WHERE apellido LIKE 'A%');

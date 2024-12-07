@@ -1,0 +1,70 @@
+mysql -u root
+
+CREATE DATABASE pedidos;
+
+USE pedidos;
+//creo tablas
+CREATE TABLE pedido(
+	RefPed CHAR(5),
+	FecPed DATE
+);
+
+CREATE TABLE lineaPedido(
+	RefPed CHAR(5),
+	CodArt CHAR(5),
+	CantArt INT(10)
+);
+
+CREATE TABLE Articulo(
+	CodArt CHAR(5),
+	DesArt VARCHAR(30),
+	PVPArt DECIMAL(3,2)
+);
+
+//creo claves primarias
+ALTER TABLE pedido
+	ADD PRIMARY KEY (RefPed);
+ALTER TABLE lineaPedido
+	ADD PRIMARY KEY (RefPed,CodArt);
+ALTER TABLE Articulo
+	ADD PRIMARY KEY (CodArt);
+//creo claves foráneas
+ALTER TABLE lineaPedido
+	ADD FOREIGN KEY (RefPed) REFERENCES pedido(RefPed);
+ALTER TABLE lineaPedido
+	ADD FOREIGN KEY (CodArt) REFERENCES Articulo(CodArt);
+//añado registros
+
+INSERT INTO pedido
+  VALUES ('P0001', '2014-02-16');
+
+INSERT INTO pedido (RefPed, FecPed)
+VALUES
+    ('P0002', '18-02-2014'),
+    ('P0003', '23-02-2014'),
+    ('P0004', '25/02/2014');
+
+UPDATE pedido
+SET FecPed='2014-02-18' WHERE RefPed='P0002';
+UPDATE pedido
+SET FecPed= '2014-02-23' WHERE RefPed='P0003';
+UPDATE pedido
+SET FecPed= '2014-02-25' WHERE RefPed='P0004';
+  
+INSERT INTO Articulo (CodArt, DesArt,PVPArt)
+VALUES
+    ('A0043', 'Boligrafo azul fino', '0.78'),
+    ('A0078', 'Boligrafo rojo normal', '1.05'),
+    ('A0075', 'Lapiz 2B', '0.55'),
+    ('A0012', 'Goma de borrar', '0.15'),
+    ('A0089', 'Sacapuntas', '0.25');
+
+INSERT INTO lineaPedido (RefPed, CodArt,CantArt)
+VALUES
+    ('P0001', 'A0043', '10'),
+    ('P0001', 'A0078', '12'),
+    ('P0002', 'A0043', '5'),
+    ('P0003', 'A0075', '20'),
+    ('P0004', 'A0012', '15'),
+    ('P0004', 'A0043', '5'),	
+    ('P0004', 'A0089', '50');	
